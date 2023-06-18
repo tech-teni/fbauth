@@ -1,23 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
+import { OldSocialLogin as SocialLogin } from "react-social-login";
+
+
 
 function App() {
+  const handleSocialLogin = (user, err) => {
+    console.log(user);
+    console.log(err);
+  };
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>hello</h1>
+      <SocialLogin
+      provider="facebook"
+      appId="821888192448241"
+      callback={handleSocialLogin}
+    >
+      <button>Login with Google</button>
+    </SocialLogin>
     </div>
   );
 }
