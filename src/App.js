@@ -26,7 +26,7 @@ function App() {
       <button
         onClick={(e) => {
           e.preventDefault();
-          logout();
+          
         }}
       >      
       <SocialLogin
