@@ -1,56 +1,159 @@
+import React, { useCallback, useRef, useState } from "react";
 import logo from "./logo.svg";
-import { useEffect, useState } from "react";
 import "./App.css";
 import { OldSocialLogin as SocialLogin } from "react-social-login";
-import FacebookLogin from 'react-facebook-login';
 
-function App() {
+import {
+  LoginSocialGoogle,
+  LoginSocialAmazon,
+  LoginSocialFacebook,
+  LoginSocialGithub,
+  LoginSocialInstagram,
+  LoginSocialLinkedin,
+  LoginSocialMicrosoft,
+  LoginSocialPinterest,
+  LoginSocialTwitter
+} from "reactjs-social-login";
+
+// CUSTOMIZE ANY UI BUTTON
+import {
+  FacebookLoginButton,
+  GoogleLoginButton,
+  GithubLoginButton,
+  AmazonLoginButton,
+  InstagramLoginButton,
+  LinkedInLoginButton,
+  MicrosoftLoginButton,
+  TwitterLoginButton
+} from "react-social-login-buttons";
+
+const REDIRECT_URI = "http://localhost:3000/account/login";
+
+const App = () => {
+  const [provider, setProvider] = useState("");
+  const [profile, setProfile] = useState();
+  const amazonRef = useRef();
+  const instagramRef = useRef();
+  const googleRef = useRef();
+  const facebookRef = useRef();
+  const microsoftRef = useRef();
+  const linkedinRef = useRef();
+  const githubRef = useRef();
+  const pinterestRef = useRef();
+  const twitterRef = useRef();
+// 
+
+
   const handleSocialLogin = (user, err) => {
     console.log(user);
     console.log(err);
   };
 
- const  responseFacebook=(response)=> {
-    console.log(response);
-  }
+//  const  responseFacebook=(response)=> {
+//     console.log(response);
+//   }
+
+
+
+  // 
+  const onLoginStart = useCallback(() => {
+    alert("login start");
+  }, []);
+
+  const onLogoutFailure = useCallback(() => {
+    alert("logout fail");
+  }, []);
+
+  const onLogoutSuccess = useCallback(() => {
+    setProfile(null);
+    setProvider("");
+    alert("logout success");
+  }, []);
+
+
+  
+ 
 
   return (
-    <div className="App">
-      <h1>hello</h1>
+    <>
+      <div className={`App ${provider && profile ? "hide" : ""}`}>
       <button>
-        <SocialLogin
-          onClick={(e) => {
-            console.log("hejej");
-          }}
+    <SocialLogin
+      onClick={(e) => {
+        console.log("hejej");
+      }}
 
-          provider="facebook"
+      provider="facebook"
+      appId="821888192448241"
+      callback={handleSocialLogin}
+      onLoginFailure={(err) => {}}>
+          <h1>hello</h1>
+
+      Login with facebook
+    </SocialLogin>
+  </button>
+        <h1 className="title">ReactJS Social Login</h1>
+        <LoginSocialFacebook
+          ref={facebookRef}
           appId="821888192448241"
-          callback={handleSocialLogin}
-          onLoginFailure={(err) => {
+          onLoginStart={onLoginStart}
+          onLogoutSuccess={onLogoutSuccess}
+          onResolve={({ provider, data }) => {
+            setProvider(provider);
+            setProfile(data);
+            console.log(data, "data");
+            console.log(provider, "provider");
+          }}
+          onReject={(err) => {
             console.log(err);
           }}
         >
-          Login with facebook
-        </SocialLogin>
-      </button>
-      <button
-      
-        onClick={(e) => {
-          e.preventDefault();
-        }}
-      >
-         <FacebookLogin
-          appId="1088597931155576"
-          autoLoad={true}
-          fields="name,email,picture"
-          scope="public_profile,user_friends,user_actions.books"
-          callback={responseFacebook}
-        >
-        Log in with facebook react
-        </FacebookLogin>
-      </button>
-    </div>
-  );
-}
+          <FacebookLoginButton />
+        </LoginSocialFacebook>
 
+
+      </div>
+    </>
+  );
+;
+        }
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
