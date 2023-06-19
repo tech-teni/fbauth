@@ -28,8 +28,19 @@ function App() {
           e.preventDefault();
           logout();
         }}
-      >
-        Log out
+      >      
+      <SocialLogin
+      provider="facebook"
+      appId="821888192448241"
+      callback={handleSocialLogin}
+      onLogoutSuccess={(err) => {
+        console.log(err);
+      }}
+    >
+              Log out
+
+    </SocialLogin>
+
       </button>
     </div>
   );
