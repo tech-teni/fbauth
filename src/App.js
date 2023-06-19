@@ -101,8 +101,11 @@ const App = () => {
 
       <button onClick={(e)=>{
         e.preventDefault()
+        FacebookLoginClient.getLoginStatus((res) => {
+          console.log(res);
+        });
         FacebookLoginClient.logout((res) => {
-          console.log(res.status);
+          console.log(res);
         });
       }}>Logout</button>
     </>
